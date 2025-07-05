@@ -1,0 +1,43 @@
+.task-card {
+    position: relative;
+    min-height: 70vh;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.task {
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.add-task {
+    position: absolute;
+    bottom: 1rem;
+    cursor: pointer;
+}
+
+
+.search-input {
+    position: relative;
+    border: 1px solid black;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.search-icon {
+    max-width: 50px;
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+}
+
+.action-icon{
+    position: absolute;
+    right: 1rem;
+    max-width: 23px;
+    cursor: pointer;
+}
