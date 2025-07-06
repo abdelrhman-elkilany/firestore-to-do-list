@@ -17,6 +17,7 @@
 .add-task {
     position: absolute;
     bottom: 1rem;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -35,9 +36,24 @@
     cursor: pointer;
 }
 
-.action-icon{
+.action-icon {
     position: absolute;
     right: 1rem;
     max-width: 23px;
     cursor: pointer;
+}
+
+.spinner-icon {
+    position: absolute;
+    right: 1rem;
+    max-width: 5vw;
+}
+
+.icon-image {
+    max-width: 10vw;
+}
+@media(min-width: 750px){
+    .icon-image {
+        max-width: 4vw;
+    }  
 }

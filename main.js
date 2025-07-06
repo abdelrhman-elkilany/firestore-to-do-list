@@ -10,12 +10,16 @@ fetchData(done, "done", refreshCompleted);
 const toDoGroup = document.getElementById('toDoGroup');
 const completedGroup = document.getElementById('completedGroup');
 
-function addToDo(e) {
-    input = e.target.previousElementSibling.value
+async function addToDo(e) {
+    input = e.target.previousElementSibling.previousElementSibling.value
+    e.target.style.display = "none";
+    e.target.previousElementSibling.style.display = "block"
+    await updateTask(input, "pending")
     toDo.push(input);
-    e.target.previousElementSibling.value = ''
-    updateTask(input, "pending")
+    e.target.previousElementSibling.previousElementSibling.value = ''
     appendTaskTo(input, toDoGroup, 'https://cdn-icons-png.flaticon.com/512/8832/8832108.png')
+    e.target.style.display = "block";
+    e.target.previousElementSibling.style.display = "none"
 }
 
 function searchToDo(e) {
@@ -40,32 +44,40 @@ function searchCompleted(e) {
 
 
 //mark as completed
-toDoGroup.addEventListener('click', function (e) {
+toDoGroup.addEventListener('click', async function (e) {
     clickedElement = e.target;
     if (clickedElement.matches('img')) {
         clickedText = clickedElement.parentElement.innerText;
+        clickedElement.style.display = "none";
+        spinner = addSpinner(clickedElement.parentElement);
+        await updateTask(clickedText, "done")
         let index = toDo.indexOf(clickedText);
         if (index !== -1) {
             toDo.splice(index, 1);
         }
         done.push(clickedText);
-        updateTask(clickedText, "done")
+        clickedElement.removeAttribute('style');
+        spinner.parentElement.removeChild(spinner.parentElement.lastChild)
         clickedElement.src = 'https://cdn-icons-png.flaticon.com/512/10308/10308996.png'
         completedGroup.append(clickedElement.parentElement);
     }
 });
 
 //mark as to do
-completedGroup.addEventListener('click', function (e) {
+completedGroup.addEventListener('click', async function (e) {
     clickedElement = e.target;
     if (clickedElement.matches('img')) {
         clickedText = clickedElement.parentElement.innerText;
+        clickedElement.style.display = "none";
+        spinner = addSpinner(clickedElement.parentElement);
+        await updateTask(clickedText, "pending")
         let index = done.indexOf(clickedText);
         if (index !== -1) {
             done.splice(index, 1);
         }
         toDo.push(clickedText);
-        updateTask(clickedText, "pending")
+        clickedElement.removeAttribute('style');
+        spinner.parentElement.removeChild(spinner.parentElement.lastChild)
         clickedElement.src = 'https://cdn-icons-png.flaticon.com/512/8832/8832108.png'
         toDoGroup.append(clickedElement.parentElement);
     }
@@ -162,6 +174,31 @@ async function updateTask(data, status) {
     }
 
 }
+
+
+function addSpinner(taskElement) {
+    // Create spinner element
+    const spinner = document.createElement("div");
+    spinner.className = "spinner-border spinner-icon";
+    spinner.setAttribute("role", "status");
+    spinner.setAttribute("id", "spinner-icon");
+
+    const span = document.createElement("span");
+    span.className = "visually-hidden";
+    span.textContent = "Loading...";
+
+    spinner.appendChild(span);
+
+    taskElement.appendChild(spinner);
+
+    console.log(spinner);
+    return spinner;
+
+}
+
+
+
+
 
 
 
